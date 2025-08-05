@@ -5,7 +5,7 @@ int binary_search(int arr[],int n,int x)
     int u=n-1;
     while(l<=u)
     {
-        int avg=(l+n)/2;
+        int avg=(l+u)/2;
         if(arr[avg]==x)
         {
             printf("The number is at location= %d",avg+1);
@@ -13,11 +13,11 @@ int binary_search(int arr[],int n,int x)
         }
         else if(arr[avg]<x)
         {
-            l=avg+1;
+            u=avg+1;
         }
         else
         {
-            u=avg-1;
+            l=avg-1;
         }
     }
     printf("The number was not found in the array");
