@@ -17,7 +17,7 @@ void print_info(struct organisation o[])
     {
         for (int j=0;j<2;j++)
         {
-            printf("\n%s works in organization %s with id %d and his id is %d and his salary is %d",o[i].e[j].employee_name,o[i].Organization_name,o[i].Organization_id,o[i].e[j].employee_id,o[i].e[j].employee_salary);
+            printf("\n%s works in organization %s with id %d and his/her id is %d and his salary is %d",o[i].e[j].employee_name,o[i].Organization_name,o[i].Organization_id,o[i].e[j].employee_id,o[i].e[j].employee_salary);
         }
     }
 }

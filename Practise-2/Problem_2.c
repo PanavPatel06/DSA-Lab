@@ -8,7 +8,7 @@ struct student
 
 void print_info(struct student s1[])
 {
-    for(int i=0;i<2;i++)
+    for(int i=0;i<5;i++)
     {
         printf("Name of student is= %s \n",s1[i].student_name);
         printf("Roll no of student = %d \n",s1[i].student_rollno);
@@ -18,9 +18,9 @@ void print_info(struct student s1[])
 
 void main()
 {
-    struct student s[2];
+    struct student s[5];
     printf("Enter the details for 5 student\n");
-    for(int i=0;i<2;i++)
+    for(int i=0;i<5;i++)
     {
         printf("Enter the name of the student=\n");
         scanf("%s",s[i].student_name);
