@@ -11,14 +11,14 @@ struct Stack* createStack(int size)
 {
   struct Stack *s=(struct Stack *) malloc(sizeof(struct Stack));
   s->size=size;
-  s->top=-1;
+  s->top=0;
   s->array=(int *)malloc(sizeof(int)*size);
   return s;
 }
 
 int isEmpty(struct Stack *s)
 {
-  if(s->top==-1)
+  if(s->top==0)
   {
     printf("The stack is Empty\n");
     return 1;
@@ -32,7 +32,7 @@ int isEmpty(struct Stack *s)
 
 int isFull(struct Stack *s)
 {
-  if(s->top==s->size-1)
+  if(s->top==s->size)
   {
     printf("The stack is full\n");
     return 1;
@@ -52,8 +52,8 @@ int push(struct Stack *s)
   {
     printf("Enter the value that is to be pushed=");
     scanf("%d",&item1);
-    s->top=s->top+1;
     s->array[s->top]=item1;
+    s->top=s->top+1;
     printf("Pushed the element to stack\n");
     return 0;
   }
@@ -74,7 +74,7 @@ int pop(struct Stack *s)
 
 void print_top(struct Stack *s)
 {
-  printf("The topmost element is %d\n",s->array[s->top]);
+  printf("The topmost element is %d\n",s->array[s->top-1]);
 }
 
 int main()

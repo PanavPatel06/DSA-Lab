@@ -17,10 +17,10 @@ void main()
 {
     struct student s;
     printf("Enter the name of the student=\n");
-    scanf("%s",s.student_name);
+    scanf("%[^\n]",s.student_name);
     printf("Enter the roll no of student=\n");
     scanf("%d",&s.student_rollno);
     printf("Enter the address of the student=\n");
-    scanf("%s",s.student_address);
+    scanf(" %[^\n]",s.student_address);
     print_info(&s);
 }
