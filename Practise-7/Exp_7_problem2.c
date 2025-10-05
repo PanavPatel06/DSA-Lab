@@ -78,7 +78,7 @@ int display(struct node * start)
     printf("%d-->",temp->info);
     temp=temp->next;
   }
-  printf("NULL");
+  printf("NULL\n");
   return 0;
 }
 

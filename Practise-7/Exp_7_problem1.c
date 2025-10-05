@@ -78,7 +78,7 @@ int display(struct node * start)
     printf("%d-->",temp->info);
     temp=temp->next;
   }
-  printf("NULL");
+  printf("NULL\n");
   return 0;
 }
 
@@ -89,7 +89,7 @@ int main()
   {
     struct node * n;
     int a,b;
-    printf("\nEnter the number for following choices= \n1.Insert a node at end \n2.Insert a node at beginning \n3.Insert a node in between \n4.Display Linked list \n5.To exit\n");
+    printf("Enter the number for following choices= \n1.Insert a node at end \n2.Insert a node at beginning \n3.Insert a node in between \n4.Display Linked list \n5.To exit\n");
     scanf("%d",&a);
     switch(a)
     {
