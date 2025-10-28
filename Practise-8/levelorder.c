@@ -1,187 +1,119 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct Tnode
+struct node
 {
-    int info;
-    struct Tnode *left;
-    struct Tnode *right;
+  int data;
+  struct node * right,* left;
 };
 
-struct Qnode
+struct queueNode
 {
-    struct Tnode *data;
-    struct Qnode *next;
+  struct node *treeNode;
+  struct queueNode *next;
 };
 
-struct Queue
-{
-    struct Qnode *front, *rear;
-};
+struct queueNode *forw=NULL,*rear=NULL;
 
-struct Tnode* createTnode(int i)
+void enqueue(struct node *treeNode)
 {
-    struct Tnode* n = (struct Tnode *)malloc(sizeof(struct Tnode));
-    if(n == NULL)
-    {
-        printf("\nMemory is full");
-        exit(0);
-    }
-    n->info = i;
-    n->left = NULL;
-    n->right = NULL;
-    return n;
+  struct queueNode *newQ=(struct queueNode *)malloc(sizeof(struct queueNode));
+  newQ->treeNode=treeNode;
+  newQ->next=NULL;
+  if(rear==NULL)
+  {
+    forw=rear=newQ;
+  }
+  else
+  {
+    rear->next=newQ;
+    rear=newQ;
+  }
 }
 
-struct Qnode* createQnode(struct Tnode* t)
+struct node* dequeue()
 {
-    struct Qnode* n = (struct Qnode*)malloc(sizeof(struct Qnode));
-    if(n == NULL)
-    {
-        printf("\nMemory is full");
-        exit(0);
-    }
-    n->data = t;
-    n->next = NULL;
-    return n;
+  if(forw==NULL)
+    return NULL;
+  struct queueNode *temp=forw;
+  struct node *treeNode=temp->treeNode;
+  forw=forw->next;
+  if(forw==NULL)
+    rear=NULL;
+  return treeNode;
 }
 
-struct Queue* createQueue()
+int isEmpty()
 {
-    struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
-    if(q == NULL)
-    {
-        printf("\nMemory is full");
-        exit(0);
-    }
-    q->front = q->rear = NULL;
-    return q;
+  return (forw==NULL);
 }
 
-void enQueue(struct Queue* q, struct Tnode* t)
+struct node* createNode(int data)
 {
-    struct Qnode* n = createQnode(t);
-    if (q->rear == NULL) {
-        q->front = q->rear = n;
-        return;
-    }
-    q->rear->next = n;
-    q->rear = n;
+  struct node* newNode=(struct node *)malloc(sizeof(struct node));
+  newNode->data=data;
+  newNode->left=newNode->right=NULL;
+  return newNode;
 }
 
-struct Tnode* deQueue(struct Queue* q)
+struct node* createTree()
 {
-    if (q->front == NULL)
-        return NULL;
-    struct Qnode* temp = q->front;
-    struct Tnode* TnodeData = temp->data;
-    q->front = q->front->next;
-    if (q->front == NULL)
-        q->rear = NULL;
-    free(temp);
-    return TnodeData;
+  int data;
+  printf("Enter data (-1 for no node): ");
+  scanf("%d",&data);
+  if(data==-1) return NULL;
+  struct node* root=createNode(data);
+  printf("Enter left child of %d\n",data);
+  root->left=createTree();
+  printf("Enter right child of %d\n",data);
+  root->right=createTree();
+  return root;
 }
 
-int isQueueEmpty(struct Queue* q)
+void displayLevelOrder(struct node *root)
 {
-    if(q->front == NULL)
-        return 1;
-    else
-        return 0;
-}
-
-void levelOrder(struct Tnode* root)
-{
-    if (root == NULL)
-    {
-        printf("\nThe Tree is empty\n");
-        return;
-    }
-    struct Queue* q = createQueue();
-    struct Tnode* temp = root;
-    enQueue(q, temp);
-    printf("\nLevel Order Traversal: ");
-    while (!isQueueEmpty(q))
-    {
-        temp = deQueue(q);
-        printf("%d-->", temp->info);
-        if (temp->left != NULL)
-            enQueue(q, temp->left);
-        if (temp->right != NULL)
-            enQueue(q, temp->right);
-    }
-    printf("END\n");
-    free(q);
-}
-
-// ** NEW FUNCTION TO CREATE THE TREE LEVEL-WISE **
-struct Tnode* createTreeLevelWise()
-{
-    int val;
-    struct Tnode* root = NULL;
-    struct Queue* q = createQueue();
-
-    printf("\nEnter the value for the root node (-1 for no node): ");
-    scanf("%d", &val);
-
-    if (val == -1)
-    {
-        free(q);
-        return NULL;
-    }
-
-    root = createTnode(val);
-    enQueue(q, root);
-
-    while (!isQueueEmpty(q))
-    {
-        struct Tnode* current = deQueue(q);
-
-        printf("Enter left child for %d (-1 for no node): ", current->info);
-        scanf("%d", &val);
-        if (val != -1)
-        {
-            current->left = createTnode(val);
-            enQueue(q, current->left);
-        }
-
-        printf("Enter right child for %d (-1 for no node): ", current->info);
-        scanf("%d", &val);
-        if (val != -1)
-        {
-            current->right = createTnode(val);
-            enQueue(q, current->right);
-        }
-    }
-    printf("\nTree created successfully.\n");
-    free(q);
-    return root;
+  if(root==NULL)
+  {
+    printf("Tree is empty!\n");
+    return;
+  }
+  enqueue(root);
+  printf("\nLevel Order Traversal: ");
+  while(!isEmpty())
+  {
+    struct node *current=dequeue();
+    printf("%d ",current->data);
+    if(current->left!=NULL)
+      enqueue(current->left);
+    if(current->right!=NULL)
+      enqueue(current->right);
+  }
+  printf("\n");
 }
 
 int main()
 {
-    struct Tnode* root = NULL;
-    while(1)
+  struct node *root=NULL;
+  int a;
+  while(1)
+  {
+    printf("\nEnter the number for following choices \n1.Create Tree \n2.Display level order \n3.Exit\n");
+    scanf("%d",&a);
+    switch(a)
     {
-        int a;
-        printf("\nEnter the number for following choices= \n1.Create Tree Level Wise \n2.Display Level Order \n3.To exit\n");
-        scanf("%d", &a);
-
-        switch(a)
-        {
-            case 1:
-                root = createTreeLevelWise();
-                break;
-            case 2:
-                levelOrder(root);
-                break;
-            case 3:
-                exit(0);
-                break;
-            default:
-                printf("Invalid choice");
-                exit(0);
-        }
+      case 1:
+        root=createTree();
+        break;
+      case 2:
+        displayLevelOrder(root);
+        break;
+      case 3:
+        exit(0);
+        break;
+      default:
+        printf("Invalid Choice");
+        break;
     }
-    return 0;
+  }
+  return 0;
 }
