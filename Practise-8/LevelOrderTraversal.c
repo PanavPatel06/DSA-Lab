@@ -16,7 +16,18 @@ struct node* createNode(int data) {
   return newNode;
 }
 
-struct node * forw,* rear;
+struct  queueNode
+{
+  struct node * ptr;
+  struct queueNode * next;
+};
+
+struct queueNode * forw,* rear;
+
+struct node * createQueueNode()
+{
+  struct n *=(struct queueNode)malloc(sizeof(struct queueNode))
+}
 
 struct node * createTree()
 {

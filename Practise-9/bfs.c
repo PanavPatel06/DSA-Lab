@@ -58,16 +58,25 @@ void addEdge(int s,int d)
   }
 }
 
-void dfs(int v)
+void bfs(int start)
 {
-  printf("%d ",v);
-  visited[v]=1;
-  struct edge * e=edgelist;
-  while(e!=NULL)
+  int q[100],front=0,rear=0;
+  q[rear++]=start;
+  visited[start]=1;
+  while(front<rear)
   {
-    if(e->src==v && visited[e->dest]==0)
-      dfs(e->dest);
-    e=e->next;
+    int v=q[front++];
+    printf("%d ",v);
+    struct edge * e=edgelist;
+    while(e!=NULL)
+    {
+      if(e->src==v && visited[e->dest]==0)
+      {
+        q[rear++]=e->dest;
+        visited[e->dest]=1;
+      }
+      e=e->next;
+    }
   }
 }
 
@@ -87,6 +96,6 @@ int main()
   }
   printf("Enter start vertex: ");
   scanf("%d",&start);
-  dfs(start);
+  bfs(start);
   return 0;
 }
